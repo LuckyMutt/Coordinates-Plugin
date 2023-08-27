@@ -1,0 +1,8 @@
+name: Coordinates_Toggle
+version: '${version}'
+main: org.coordinates_toggle.Coordinates_Toggle
+api-version: '1.19'
+author: Maledict_YT
+commands:
+  coordinates:
+    description: Toggle coordinates
