@@ -10,40 +10,44 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Coordinates extends JavaPlugin implements Listener {
 
     private static Map<Player, Boolean> coordinatesEnabledMap = new HashMap<>();
+    private DataManager dm;
+    private ConfigManager cm;
+
+    private Boolean default_value;
 
     @Override
     public void onEnable() {
 
-        getLogger().info("Coordinates plugin has been enabled");
+        //bstats
+        int pluginId = 20194;
+        Metrics metrics = new Metrics(this, pluginId);
+
+        //load config
+        dm.setup();
+        cm.setup();
+
 
         Bukkit.getPluginManager().registerEvents(this, this);
-
-        BukkitRunnable task = new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (coordinatesEnabledMap.get(player) == true) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN + "X : " + ChatColor.RESET + player.getLocation().getBlockX() + ChatColor.GREEN + " Y : " + ChatColor.RESET + player.getLocation().getBlockY() + ChatColor.GREEN + " Z : " + ChatColor.RESET + player.getLocation().getBlockZ()));
-                    }
-                }
-            }
-        };
-
-        int taskId = task.runTaskTimerAsynchronously(this, 0, 1).getTaskId();
+        getLogger().info("Coordinates plugin has been enabled");
 
     }
 
     @Override
     public void onDisable() {
+
+        //saveConfig();
+        dm.saveData();
+        cm.saveConfig();
 
         coordinatesEnabledMap.clear();
         getLogger().info("Coordinates plugin has been disabled");
@@ -67,9 +71,11 @@ public class Coordinates extends JavaPlugin implements Listener {
 
             if (coordinatesEnabled == true) {
                 coordinatesEnabledMap.put(player, false);
+                dm.setData(player, false);
                 player.sendMessage(ChatColor.RED + "Coordinates disabled. ");
             } else {
                 coordinatesEnabledMap.put(player, true);
+                dm.setData(player, true);
                 player.sendMessage(ChatColor.GREEN + "Coordinates enabled. ");
             }
         }
@@ -81,10 +87,26 @@ public class Coordinates extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
-        String PlayerName = event.getPlayer().getName();
+        UUID playerUUID = player.getUniqueId();
 
-        boolean coordinatesEnabled = true;
+        //If there is no data about player in the config file
+        if (dm.isData(player) == false) {
+            dm.setData(player, cm.getConfig("DefaultValue"));
+        }
+
+        boolean coordinatesEnabled = dm.getData(player);
+
         coordinatesEnabledMap.put(player, coordinatesEnabled);
 
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+
+        Player player = event.getPlayer();
+
+        if (coordinatesEnabledMap.get(player) == true) {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN + "X : " + ChatColor.RESET + player.getLocation().getBlockX() + ChatColor.GREEN + " Y : " + ChatColor.RESET + player.getLocation().getBlockY() + ChatColor.GREEN + " Z : " + ChatColor.RESET + player.getLocation().getBlockZ()));
+        }
     }
 }
