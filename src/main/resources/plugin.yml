@@ -1,8 +1,8 @@
 name: Coordinates
-version: '0.2'
+version: '0.1'
 main: org.coordinates.Coordinates
 api-version: '1.20'
-author: Maledict
+author: Maledict_YT
 commands:
   coordinates:
     description: Coordinates
