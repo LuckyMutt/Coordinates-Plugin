@@ -76,7 +76,7 @@ public class Coordinates extends JavaPlugin implements Listener {
             } else {
                 coordinatesEnabledMap.put(player, true);
                 dm.setData(player, true);
-                player.sendMessage(ChatColor.GREEN + "Coordinates enabled. ");
+                player.sendMessage(ChatColor.BLACK + "Coordinates enabled. ");
             }
         }
         return false;
