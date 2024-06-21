@@ -1,5 +1,5 @@
 name: Coordinates
-version: '0.2.1'
+version: '0.2.2'
 main: org.coordinates.Coordinates
 api-version: '1.13'
 author: Maledict
