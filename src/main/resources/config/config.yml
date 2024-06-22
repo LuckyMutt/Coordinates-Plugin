@@ -1,0 +1,19 @@
+coordinates:
+  # Should the coordinates actionbar shown by default
+  enabled_by_default: true
+  # The pattern for the coordinates actionbar.
+  # Use {world}, {x}, {y], {z} as a placeholder for the world and respective coordinates.
+  actionbar_coordinates_message: "&7* &6{world} &7| X: &e{x} &7Y: &e{y} &7Z: &e{z} &7*"
+
+  message:
+    command:
+      error:
+        no_permission: "&7[&c!&7] &cYou don't have permission to use this command!"
+        only_player: "&cYou need to be a player to perform this command!"
+      help:
+        - ""
+        - "&7* &6&lPlayer Coordinates &r&7*"
+        - ""
+        - "&7To toggle the coordinates actionbar message on/off use:"
+        - " &7/coodinates &etoggle"
+        - ""

@@ -1,8 +1,13 @@
 name: Coordinates
 version: '0.2.2'
-main: org.coordinates.Coordinates
-api-version: '1.13'
-author: Maledict
+main: me.luckymutt.cord.Coordinates
+api-version: '1.20'
+description: A simple plugin to show the players their coordinates in the actionbar
+authors:
+  - Maledict
+  - LuckyMutt
 commands:
   coordinates:
-    description: Coordinates
+    description: Basic command for the coordinates plugin
+    usage: /<command> (args)
+    permission: coordinates.command
