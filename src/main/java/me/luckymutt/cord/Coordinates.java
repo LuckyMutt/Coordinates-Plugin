@@ -7,8 +7,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.UUID;
-
 public class Coordinates extends JavaPlugin {
     static {
         ConfigurationSerialization.registerClass(CoordinatesPlayerData.class, "CoordinatesPlayer");
